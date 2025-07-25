@@ -1,13 +1,11 @@
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
-const qs = require("querystring");
 require("dotenv").config();
 
 const app = express();
 app.use(cors());
 
-// Environment variables
 const client_id = process.env.YAHOO_CLIENT_ID;
 const client_secret = process.env.YAHOO_CLIENT_SECRET;
 const redirect_uri = process.env.REDIRECT_URI;
@@ -25,13 +23,15 @@ app.get("/auth/login", (req, res) => {
 app.get("/auth/callback", async (req, res) => {
   const code = req.query.code;
   try {
+    const body = new URLSearchParams({
+      grant_type: "authorization_code",
+      redirect_uri,
+      code,
+    });
+
     const tokenRes = await axios.post(
       "https://api.login.yahoo.com/oauth2/get_token",
-      qs.stringify({
-        grant_type: "authorization_code",
-        redirect_uri,
-        code,
-      }),
+      body.toString(),
       {
         headers: {
           Authorization:
