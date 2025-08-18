@@ -26,14 +26,11 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
+    origin: true,
     credentials: true,
-    origin(origin, cb) {
-      if (!origin) return cb(null, true); // same-origin/curl
-      if (ALLOWED_ORIGINS.includes(origin)) return cb(null, true);
-      return cb(new Error('Not allowed by CORS: ' + origin));
-    },
   })
 );
+
 
 // ----- Helpers -----
 function setAuthCookie(res, token, remember) {
