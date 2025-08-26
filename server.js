@@ -19,7 +19,8 @@ const ALLOWED_ORIGINS = (process.env.CLIENT_ORIGINS ||
 const UNIVERSAL_PASSWORD = process.env.UNIVERSAL_PASSWORD || 'laser2025';
 const AUTH_SECRET = process.env.AUTH_SECRET || 'dev-secret-change-me';
 const COOKIE_SECURE = String(process.env.COOKIE_SECURE || '').toLowerCase() === 'true'; // true in prod
-const COOKIE_SAMESITE = process.env.COOKIE_SAMESITE || 'Lax'; // 'Lax' (dev) or 'None' (prod)
+const COOKIE_SAMESITE = (process.env.COOKIE_SAMESITE || 'Lax').toLowerCase();
+
 
 // ----- Middleware -----
 app.use(express.json());
